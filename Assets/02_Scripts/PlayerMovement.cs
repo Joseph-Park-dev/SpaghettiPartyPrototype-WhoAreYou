@@ -6,9 +6,9 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb;
     [SerializeField] private float jumpForce = 10f;
     [SerializeField] private Transform feetPos;
-    [SerializeField] private float checkRadius;
-    private bool isStepping;
-    public LayerMask objectStepping;
+    private float checkRadius = .3f;
+    private Collider2D steppingColl;
+    [SerializeField] private LayerMask objectStepping;
 
     private Vector2 characterScale;
     private Animator animator;
@@ -22,6 +22,8 @@ public class PlayerMovement : MonoBehaviour
     {
         Move();
         Jump();
+        if (StompDetected())
+            rb.velocity = Vector2.up * jumpForce;
     }
 
     private void Move()
@@ -50,16 +52,26 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump()
     {
-        isStepping = Physics2D.OverlapCircle(
+        steppingColl = Physics2D.OverlapCircle(
             feetPos.position,
             checkRadius,
             objectStepping
             );
-        if (isStepping == true && Input.GetKeyDown(KeyCode.Space))
+        if (steppingColl == true && Input.GetKeyDown(KeyCode.Space))
         {
             rb.velocity = Vector2.up * jumpForce;
         }
-        AnimateVertical(isStepping);
+        AnimateVertical(steppingColl);
+    }
+
+    private bool StompDetected()
+    {
+        if(steppingColl == true && steppingColl.gameObject.tag == "ENEMY")
+        {
+            print("Detected!");
+            return true;
+        }
+        return false;
     }
 
     private void AnimateVertical(bool isStepping)
