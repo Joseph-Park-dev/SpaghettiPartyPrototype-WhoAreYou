@@ -5,9 +5,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float moveSpeed = 8f;
     private Rigidbody2D rb;
     [SerializeField] private float jumpForce = 10f;
+    [SerializeField] private float bounceForce = 10f;
     [SerializeField] private Transform feetPos;
     private float checkRadius = .3f;
-    private Collider2D steppingColl;
+    private Collider2D[] steppingColl;
     [SerializeField] private LayerMask objectStepping;
 
     private Vector2 characterScale;
@@ -22,8 +23,6 @@ public class PlayerMovement : MonoBehaviour
     {
         Move();
         Jump();
-        if (StompDetected())
-            rb.velocity = Vector2.up * jumpForce;
     }
 
     private void Move()
@@ -52,27 +51,36 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump()
     {
-        steppingColl = Physics2D.OverlapCircle(
+        steppingColl = Physics2D.OverlapCircleAll(
             feetPos.position,
             checkRadius,
             objectStepping
             );
-        if (steppingColl == true && Input.GetKeyDown(KeyCode.Space))
+        foreach(Collider2D collider in steppingColl)
         {
-            rb.velocity = Vector2.up * jumpForce;
+            bool onGround = collider.gameObject.CompareTag("GROUND");
+            if (onGround && Input.GetKeyDown(KeyCode.Space))
+                rb.velocity = Vector2.up * jumpForce;
+            bool onPlayer = collider.gameObject.CompareTag("ENEMY");
+            if (onPlayer && !onGround)
+            {
+                print("hello!");
+                rb.velocity = Vector2.up * bounceForce;
+            }
+            AnimateVertical(onGround);
         }
-        AnimateVertical(steppingColl);
     }
-
+/*
     private bool StompDetected()
     {
-        if(steppingColl == true && steppingColl.gameObject.tag == "ENEMY")
+        if(isStepping == true && isStepping.gameObject.tag == "ENEMY")
         {
             print("Detected!");
             return true;
         }
         return false;
     }
+    */
 
     private void AnimateVertical(bool isStepping)
     { 

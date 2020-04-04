@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class StompingBehaviour : MonoBehaviour
+public class KillManager : MonoBehaviour
 {
     [SerializeField] Transform headPos;
     [SerializeField] Transform feetPos;
