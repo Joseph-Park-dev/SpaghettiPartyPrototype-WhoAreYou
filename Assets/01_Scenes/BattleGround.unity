@@ -136,7 +136,7 @@ PrefabInstance:
     - target: {fileID: 7726034751322366774, guid: 290f95d639137f14e874ecd8c8a32b45,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.46
+      value: -7.62
       objectReference: {fileID: 0}
     - target: {fileID: 7726034751322366774, guid: 290f95d639137f14e874ecd8c8a32b45,
         type: 3}
@@ -4914,6 +4914,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   enemy: {fileID: 2997560857929267154, guid: c19d0357463fcb748b13d604b4ead9c5, type: 3}
+  enemyList: []
   enemySpawnPoint: {x: 11, y: 1, z: -7}
 --- !u!4 &1861817707
 Transform:
@@ -4939,7 +4940,7 @@ PrefabInstance:
     - target: {fileID: 4414211951547065111, guid: f1fc4ce16d845b04dbd1491395589301,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.82
+      value: -2.3
       objectReference: {fileID: 0}
     - target: {fileID: 4414211951547065111, guid: f1fc4ce16d845b04dbd1491395589301,
         type: 3}

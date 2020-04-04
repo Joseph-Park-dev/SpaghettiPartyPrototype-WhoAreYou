@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -8,17 +9,18 @@ public class GameManager : MonoBehaviour
     [SerializeField] LayerMask steppableObj;
 
     [SerializeField] private GameObject enemy;
-    private List<GameObject> enemyList;
+    [SerializeField] private List<GameObject> enemyList;
     [SerializeField] private Vector3 enemySpawnPoint = new Vector3(11f, 1f, -7f);
 
     private void Start()
     {
         enemyList = new List<GameObject>();
-        enemyList.Add(SpawnObj(enemy, enemySpawnPoint));
+        StartCoroutine(WaitAndSpawn(5, 1));
+        //StartCoroutine(WaitAndSpawn(enemy, enemySpawnPoint, 5, 1));
     }
     private void Update()
     {
-        foreach (GameObject enemy in enemyList)
+        foreach(GameObject enemy in enemyList)
         {
             if (DeathDetected(enemy))
             {
@@ -27,9 +29,24 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private GameObject SpawnObj(GameObject prefab, Vector3 position)
+    private IEnumerator WaitAndSpawn(
+        int spawnCount,
+        int waitSeconds
+        )
     {
-        return Instantiate(prefab, position, Quaternion.identity);
+        for (int i = 0; i < spawnCount; ++i)
+        {
+            SpawnEnemy(enemy, enemySpawnPoint, 5);
+            yield return new WaitForSeconds(waitSeconds);
+        }
+    }
+
+    private void SpawnEnemy(GameObject prefab, Vector3 position, int count)
+    {
+        for(int i = 0; i < count; ++i)
+        {
+            enemyList.Add(Instantiate(prefab, position, Quaternion.identity));
+        }
     }
 
     private void KillObj(GameObject target)

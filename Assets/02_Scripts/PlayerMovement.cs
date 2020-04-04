@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float jumpForce = 10f;
     [SerializeField] private float bounceForce = 10f;
     [SerializeField] private Transform feetPos;
-    private float checkRadius = .3f;
+    private float checkRadius = .2f;
     private Collider2D[] steppingColl;
     [SerializeField] private LayerMask objectStepping;
 
@@ -21,13 +21,12 @@ public class PlayerMovement : MonoBehaviour
     }
     private void Update()
     {
-        Move();
-        Jump();
+        Move(Input.GetAxisRaw("Horizontal"));
+        Jump(Input.GetKeyDown(KeyCode.Space));
     }
 
-    private void Move()
+    public void Move(float inputH)
     {
-        float inputH = Input.GetAxisRaw("Horizontal");
         Vector2 direction = new Vector2(inputH, 0);
         transform.Translate(direction * moveSpeed * Time.deltaTime);
 
@@ -49,7 +48,7 @@ public class PlayerMovement : MonoBehaviour
         transform.localScale = characterScale;
     }
 
-    private void Jump()
+    public void Jump(bool inputV)
     {
         steppingColl = Physics2D.OverlapCircleAll(
             feetPos.position,
@@ -59,28 +58,16 @@ public class PlayerMovement : MonoBehaviour
         foreach(Collider2D collider in steppingColl)
         {
             bool onGround = collider.gameObject.CompareTag("GROUND");
-            if (onGround && Input.GetKeyDown(KeyCode.Space))
+            if (onGround && inputV)
                 rb.velocity = Vector2.up * jumpForce;
             bool onPlayer = collider.gameObject.CompareTag("ENEMY");
             if (onPlayer && !onGround)
             {
-                print("hello!");
                 rb.velocity = Vector2.up * bounceForce;
             }
             AnimateVertical(onGround);
         }
     }
-/*
-    private bool StompDetected()
-    {
-        if(isStepping == true && isStepping.gameObject.tag == "ENEMY")
-        {
-            print("Detected!");
-            return true;
-        }
-        return false;
-    }
-    */
 
     private void AnimateVertical(bool isStepping)
     { 

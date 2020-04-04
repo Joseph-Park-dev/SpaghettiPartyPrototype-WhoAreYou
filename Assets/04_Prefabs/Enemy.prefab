@@ -73,6 +73,7 @@ GameObject:
   - component: {fileID: 2997560857929267150}
   - component: {fileID: 2997560857929267151}
   - component: {fileID: 2997560857929267148}
+  - component: {fileID: 3374341496370423226}
   m_Layer: 8
   m_Name: Enemy
   m_TagString: ENEMY
@@ -193,7 +194,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!95 &2997560857929267148
 Animator:
   serializedVersion: 3
@@ -213,3 +214,23 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &3374341496370423226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2997560857929267154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c4bd18dca3430f4da9857014685a634, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 8
+  jumpForce: 10
+  bounceForce: 10
+  feetPos: {fileID: 2997560857786173658}
+  objectStepping:
+    serializedVersion: 2
+    m_Bits: 256
+  targetPos: {x: 0, y: 0, z: 0}
