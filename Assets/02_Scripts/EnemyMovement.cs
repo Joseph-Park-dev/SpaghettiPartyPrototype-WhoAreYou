@@ -10,6 +10,7 @@ public class EnemyMovement : PlayerMovement
         targetPos = GameObject.FindGameObjectWithTag("PLAYER").transform.position;
         destination = targetPos - transform.position;
         Move(FacingDir(destination));
+        //AnimateDeath();
     }
 
     private float FacingDir(Vector3 destination)

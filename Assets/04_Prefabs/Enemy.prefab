@@ -229,8 +229,9 @@ MonoBehaviour:
   moveSpeed: 8
   jumpForce: 10
   bounceForce: 10
+  headPos: {fileID: 2997560857019917737}
   feetPos: {fileID: 2997560857786173658}
-  objectStepping:
+  steppableObject:
     serializedVersion: 2
     m_Bits: 256
   targetPos: {x: 0, y: 0, z: 0}

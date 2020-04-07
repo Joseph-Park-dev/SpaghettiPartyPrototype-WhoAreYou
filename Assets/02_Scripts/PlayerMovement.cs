@@ -6,10 +6,12 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb;
     [SerializeField] private float jumpForce = 10f;
     [SerializeField] private float bounceForce = 10f;
+    [SerializeField] private Transform headPos;
     [SerializeField] private Transform feetPos;
     private float checkRadius = .2f;
     private Collider2D[] steppingColl;
-    [SerializeField] private LayerMask objectStepping;
+    private Collider2D stompingColl;
+    [SerializeField] private LayerMask steppableObject;
 
     private Vector2 characterScale;
     private Animator animator;
@@ -23,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Move(Input.GetAxisRaw("Horizontal"));
         Jump(Input.GetKeyDown(KeyCode.Space));
+        //AnimateDeath();
     }
 
     public void Move(float inputH)
@@ -53,7 +56,7 @@ public class PlayerMovement : MonoBehaviour
         steppingColl = Physics2D.OverlapCircleAll(
             feetPos.position,
             checkRadius,
-            objectStepping
+            steppableObject
             );
         foreach(Collider2D collider in steppingColl)
         {
@@ -73,6 +76,19 @@ public class PlayerMovement : MonoBehaviour
     { 
         animator.SetBool("isStepping", isStepping);
     }
-    
-    
+
+    /*
+    public void AnimateDeath()
+    {
+        stompingColl = Physics2D.OverlapCircleAll(
+            headPos.position,
+            checkRadius,
+            steppableObject
+            );
+        if(stompingColl != null)
+        {
+            Debug.Log("dead");
+        }
+    }
+    */
 }

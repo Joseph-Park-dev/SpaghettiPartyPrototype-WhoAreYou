@@ -11,12 +11,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject enemy;
     [SerializeField] private List<GameObject> enemyList;
     [SerializeField] private Vector3 enemySpawnPoint = new Vector3(11f, 1f, -7f);
+    [SerializeField] private bool gameOn = false;
 
     private void Start()
     {
+
         enemyList = new List<GameObject>();
-        StartCoroutine(WaitAndSpawn(5, 1));
+        StartCoroutine(WaitAndSpawn(1, 1));
         //StartCoroutine(WaitAndSpawn(enemy, enemySpawnPoint, 5, 1));
+
     }
     private void Update()
     {
@@ -36,17 +39,14 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < spawnCount; ++i)
         {
-            SpawnEnemy(enemy, enemySpawnPoint, 5);
+            SpawnEnemy(enemy, enemySpawnPoint);
             yield return new WaitForSeconds(waitSeconds);
         }
     }
 
-    private void SpawnEnemy(GameObject prefab, Vector3 position, int count)
+    private void SpawnEnemy(GameObject prefab, Vector3 position)
     {
-        for(int i = 0; i < count; ++i)
-        {
-            enemyList.Add(Instantiate(prefab, position, Quaternion.identity));
-        }
+        enemyList.Add(Instantiate(prefab, position, Quaternion.identity));
     }
 
     private void KillObj(GameObject target)
