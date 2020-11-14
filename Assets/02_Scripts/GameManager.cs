@@ -17,9 +17,7 @@ public class GameManager : MonoBehaviour
     {
 
         enemyList = new List<GameObject>();
-        StartCoroutine(WaitAndSpawn(1, 1));
-        //StartCoroutine(WaitAndSpawn(enemy, enemySpawnPoint, 5, 1));
-
+        StartCoroutine(WaitAndSpawnGroup(3, 3, 3));
     }
     private void Update()
     {
@@ -40,6 +38,22 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < spawnCount; ++i)
         {
             SpawnEnemy(enemy, enemySpawnPoint);
+            yield return new WaitForSeconds(waitSeconds);
+        }
+    }
+
+    private IEnumerator WaitAndSpawnGroup(
+        int spawnCount,
+        int enemyCountInGroup,
+        int waitSeconds
+        )
+    {
+        for (int i = 0; i < spawnCount; ++i)
+        {
+            for (int j = 0; j < enemyCountInGroup; ++j)
+            {
+                SpawnEnemy(enemy, enemySpawnPoint);
+            }
             yield return new WaitForSeconds(waitSeconds);
         }
     }
